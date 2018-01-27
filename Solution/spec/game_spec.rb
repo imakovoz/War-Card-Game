@@ -2,9 +2,9 @@ require 'rspec'
 require 'game'
 
 describe War do
-
+  subject(:game) {War.new("test1", "test2")}
   describe '#initialize' do
-    subject(:game) {War.new("test1", "test2")}
+
 
     it 'Creates players with given names' do
       expect(game.player1.name).to eq("test1")
@@ -17,4 +17,18 @@ describe War do
     end
   end
 
+  describe '#won?' do
+    it 'Returns true if either player has no cards left' do
+      26.times do
+        game.player1.give_card
+      end
+      expect(game.player1.pile).to eq([])
+      expect(game.won?).to eq(true)
+    end
+    it 'Returns false if both players have cards' do
+      expect(game.won?).to eq(false)
+    end
+  end
+
+  
 end
