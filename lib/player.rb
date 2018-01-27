@@ -7,6 +7,7 @@ class Player
   end
 
   def give_card
+    raise 'not enough cards' if self.count == 0
     @pile.shift
   end
 

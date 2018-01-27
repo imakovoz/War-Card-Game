@@ -78,10 +78,12 @@ class War
 
 end
 
-print "Please entere player 1 name : "
-name1 = gets.chomp
-print "Please entere player 2 name : "
-name2 = gets.chomp
+if __FILE__== $PROGRAM_NAME
+  print "Please entere player 1 name : "
+  name1 = gets.chomp
+  print "Please entere player 2 name : "
+  name2 = gets.chomp
 
-game = War.new(name1, name2)
-game.play
+  game = War.new(name1, name2)
+  game.play
+end
