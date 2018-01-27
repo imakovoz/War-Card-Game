@@ -30,5 +30,33 @@ describe War do
     end
   end
 
-  
+  describe '#take_turn' do
+    it 'takes a card from each player' do
+      game.player1.pile = [Card.new(:hearts, :nine), Card.new(:hearts, :four)]
+      game.player2.pile = [Card.new(:hearts, :ten), Card.new(:hearts, :five)]
+      game.take_turn
+      expect(game.player1.pile.length).to eq(1)
+    end
+
+    it 'Gives winning player pot' do
+      game.player1.pile = [Card.new(:hearts, :nine), Card.new(:hearts, :four)]
+      game.player2.pile = [Card.new(:hearts, :ten), Card.new(:hearts, :five)]
+      game.take_turn
+      expect(game.player2.pile.length).to eq(3)
+    end
+
+    it 'If war pot takes additional card before resolving' do
+      game.player1.pile = [Card.new(:hearts, :ten), Card.new(:hearts, :four), Card.new(:hearts, :three), Card.new(:hearts, :nine)]
+      game.player2.pile = [Card.new(:hearts, :ten), Card.new(:hearts, :five), Card.new(:hearts, :seven), Card.new(:hearts, :eight)]
+      game.take_turn
+      expect(game.player1.pile.length).to eq(1)
+      expect(game.player2.pile.length).to eq(7)
+    end
+
+    it 'It breaks out of game if a player runs out mid-war' do
+      game.player1.pile = [Card.new(:hearts, :ten), Card.new(:hearts, :four)]
+      game.player2.pile = [Card.new(:hearts, :ten), Card.new(:hearts, :five), Card.new(:hearts, :seven), Card.new(:hearts, :eight)]
+      expect {game.take_turn}.to raise_error('not enough cards')
+    end
+  end
 end
